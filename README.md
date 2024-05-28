@@ -44,7 +44,7 @@ https://gitlab.com/K0lb3/phantom-of-the-kill - As the basis for the file downloa
 
 https://github.com/K0lb3/UnityPy - For parsing Unity data files; included in the repo as a fix was needed to export Renderer objects
 
-https://github.com/kohos/CriTools - For parsing ACB/AWB audio files
+https://github.com/kohos/CriTools - For parsing ACB/AWB audio files. The originally Javascript files have been translated into Python.
 
 ## Additional thanks to:
 https://github.com/vgmstream/vgmstream - For providing a greater understanding of the ACB/AWB files through the helpful comments in the related parts of their code. Also thanks for providing the HCA encryption key for PotK.
