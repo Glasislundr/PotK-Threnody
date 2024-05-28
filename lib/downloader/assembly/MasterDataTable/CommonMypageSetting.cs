@@ -1,0 +1,35 @@
+﻿// Decompiled with JetBrains decompiler
+// Type: MasterDataTable.CommonMypageSetting
+// Assembly: Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 84692B6C-DF14-44E0-9A18-AFF35C631E79
+// Assembly location: B:\workspace\PotK Unit Database\Assembly Decompile\Assembly-CSharp.dll
+
+using System;
+
+#nullable disable
+namespace MasterDataTable
+{
+  [Serializable]
+  public class CommonMypageSetting
+  {
+    public int ID;
+    public DateTime? start_at;
+    public DateTime? end_at;
+    public string background;
+    public string bgm_name;
+    public string bgm_file;
+
+    public static CommonMypageSetting Parse(MasterDataReader reader)
+    {
+      return new CommonMypageSetting()
+      {
+        ID = reader.ReadInt(),
+        start_at = reader.ReadDateTimeOrNull(),
+        end_at = reader.ReadDateTimeOrNull(),
+        background = reader.ReadStringOrNull(true),
+        bgm_name = reader.ReadStringOrNull(true),
+        bgm_file = reader.ReadStringOrNull(true)
+      };
+    }
+  }
+}

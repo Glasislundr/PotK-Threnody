@@ -1,0 +1,177 @@
+000-14_sozai				uncertain (get/next and circle objects?)
+000-14-02_sozai				I think this is parts of summon banners and rate up unit info?
+000-14-03_sozai				login bonus, but not the current one
+001-6_sozai					old main menu buttons
+001-7_sozai					mail buttons
+001-7-6_sozai				might be mail related?
+001-8-1_sozai				News icons (also has a blank tab image)
+001-9-1_sozai				MENU buttons (blank buttons and many text/icons)
+001-13_sozai				a large frame, verticalish, not sure where from
+002-2_sozai					assorted quest related (bonus rewards, quest mission stars, etc.)
+						higher folder also has some masks for bg/chara, used on the stage select screen
+002-2_sozai_sea				similar quest items for POL
+002-4_sozai					Story mode selection (the ygg circle icon and Normal/Kill mode, + the curcle used for stages on the story map screens)
+002-5_sozai					Elysium story chapter selecter for 1-7
+002-5_sozai_EverAfter		SEA chatper selector for P-6 + extra
+002-5_sozai_IntegralNoah	IN chapter selector - all
+002-5_sozai_lostRagnarok	LR chapter selector - 1-10
+002-5-2_sozai				Elysium 8-10
+002-5-2_sozai_lostRagnarok	LR 11-16
+002-8_sozai					Team setup, icons like autobattle, team str suggestion, etc.
+002-8_sozai_sea				POL Team setup
+002-8-2_sozai				Friend Unit selection
+002-8-2_sozai_sea			PoL Friend Unit selection
+002-10_sozai				large frame, horizontalish
+002-14_sozai				Character quest selection; group stories too
+						masks for character faces to be used in the multi story icons
+002-15_sozai			just masks - similar to 002-2_sozai's masks
+002-17_sozai				Locked Garden banner, bugu/side blue button, NEW/CLEAR, assorted
+002-19_sozai				buttons for some quest type (Ranking?, NEW/CLEAR, how to play)
+002-20_sozai			just masks - similar to 002-2_sozai's masks
+002-21_sozai			just masks - similar to 002-2_sozai's masks
+002-24_sozai				SEA 'Please wait for the next chapter'
+002-25_sozai				'would you like to write a review'
+002-27_sozai				Rank looking crown button?
+002-29_sozai				Player rank 1,2,3 for raid and the like
+002-edit_sozai				Team setup, different from 002-8_sozai?
+004_extraskill				not sure, kinda fucked up looking
+004-1_sozai					circle icons for unit/item screens
+004-2-2_sozai				unit friendliness screen
+						also mask for same screen
+004-3_sozai					!!! Unit details
+						also mask for same screen
+004-4-1_sozai				unit stats and gear skill box
+004-4-3_sozai				weapon list icons, rank up, NEW, etc.
+004-6_sozai					second half of team setup (background, unit pedestals, more icons)
+004-6_sozai_sea				PoL version of previous
+004-8-3_sozai				unit fusion/evolve/revive screen parts
+						also mask for unit face? seems small
+004-8-13_sozai				unit fusion/str complete screen with stat changes
+						also mask for the screen
+004-9-8_sozai				unit tensei/evolve/type change/class change
+						also mask for the screen
+004-9-9_sozai				unit stat blocks for the unit screens
+005-1_sozai					OLD version of 004-1_sozai (or earth mode?)
+005-3_sozai					weapon fusion?
+005-3-10_sozai				weapon detail view
+005-4_sozai					weapon repair? lots of rare medal icons
+005-8_sozai					weapon strengthen
+006-3_sozai					lots of gacha buttons
+						also mask for units on the gacha page? maybe the general gacha?
+006-3_sozai_new				newer gacha buttons
+006-8_sozai					NEW corner marker (for units?)
+006-13_sozai				blue background, maybe from the "rate up unit detail view"?
+007-1_sozai					shop icons
+007-1-2_sozai				select ticket background
+007-4_sozai					purchasing things, general shops?
+007-4-2_sozai				small boxes, somehow shop related?
+						also mask for units of some kinda
+007-20_sozai				RM slot buttons
+008-01_sozai				Re-run stage screen
+008-5_sozai					Friend request screen?
+008-6_sozai					Friend detail screen
+						also mask for friend's leader unit
+008-10_sozai				friend code and twitter button
+008-19_sozai				check box?
+008-20_sozai				share friend code on social media
+009-0_sozai					Gallery story sections
+009-1_sozai					Gallery story chapter selection
+009-3_sozai					Story GUI
+						also mask for units
+009-3_sozai_sea				PoL Story GUI
+009-6_sozai					Gallery Character Quest GUI
+009-12_sozai			masks for left/right. Not sure where
+010-1_sozai					Options
+011-2-2_sozai				class change GUI
+011-3-2_sozai				class change extras?
+011-4-2_sozai				more of the same?
+011-Jukebox					Jukebox buttons and image
+011-Jukebox_Jacket			Jukebox "CD Jacket" images
+011-PledgeHime_List			Pledge list background and icons
+11-2_sozai					sort
+012-7-2_sozai				frame, similar to 001-13_sozai?
+015-1_sozai					Help menu buttons
+015-5_sozai					Help QA
+017-14-7_sozai				Wind up/down (no other elements?)
+020-11-2_sozai				"Character Story" text
+020-17-1_sozai				unit info of some kind? maybe in-combat 
+020-19-1_sozai			just a unit mask?
+020-22-1_sozai				friendship level up?
+020-29_add_sozai			Text for level up/gain skill/skill upgrade
+020-29_sozai				unit level up + text similar to 020-29_add_sozai
+023-4_sozai					Colloseum buttons/gui/icons
+023-4-2_sozai				more colloseum GUI (combat ui?)
+						masks for left/right. Units in combat in colo?
+023-4-6_sozai				colo post-combat results
+023-5_sozai					colo ranks list
+023-5-1_sozai				colo rank details
+023-6_sozai					colo history + other?
+023-7-1_sozai				colo player ranking frames for player list
+023-colosseum_anim_sozai	Text for LOSE/WIN/RANK UP/RANK DOWN/STAYED/RANK BATTLE
+024-1_sozai					Title selection
+024-2_sozai					Title selection buttons
+026_1_sozai					Multi GUI
+026_11_sozai				Multi rank list
+026_12_sozai				Multi bars of some kind
+026_13_sozai				Multi history
+027-1_sozai					Daily mission GUI
+032_my_ranking_sozai		Ranking frames, similar to 002-29_sozai or 023-7-1_sozai
+032_raid_result_sozai		probably what the name says? just a background
+051-6_sozai					EARTH mode buttons
+054-3_sozai					unit art view?
+						also mask
+banner_limit				mostly numbers
+battleUI					pretty much all of the battle GUI
+battleUI_sea				PoL version of battle GUI
+battleUI_01Add				GBattle? DESTRUCTION type text
+battleUI_05					GET stuff post battle?
+battleUI_55					unit defeated
+battleUI_common				x3 speed, auto battle buttons
+battleUI_duel				attack details
+battleUI_duel_sea			PoL attack details
+battleUI_versus				Multi results DESTRUCTION, etc.
+button_base					basic buttons/tabs
+button_text					TEXT. Lots and lots of text
+button_text_SortFilter		text for sorting/filtering
+button_text_unit_bugu		chaos/law gear button text
+chat_stamp_group...			all the chat stamps
+common_sea					PoL, mostly button backgrounds
+CorpsQuest_common			Corps battle, backgrounds/buttons
+CorpsQuest_Stage_button_group1	Corps stage selection 'buttons'
+dynamic_display_sozai		character display of some kind (has unit types, but not much else)
+explore_battle				explore mode combat
+explore_common				explore mode general
+explore_HierarchyBtn		explore floor selection
+explore_mypage				explore extras
+explore_other				explore unit pages and stuff
+extraskill_thumb			gear skill equip page?
+guild_animation_sozai		Guild Battle final results
+guild_common				Guild, pretty much all the gui elements
+guild_common_home			Guild, something?
+guild_common_other			Guild, guess they were added later elements?
+guild_main_facility_frame_animation		Guild, animated flags
+guild_map					Map background and tent
+hunting						Guild, searching for guild
+love_gauge					filling bars
+map_edit					Guild, edit guild battle map
+map_edit_menu				Guild, edit guild battle map menu
+mypage_ground				Earth mode home page?
+mypage_sozai				Home elements (including some older ones)
+popup_base					Lots of basic buttons
+sea_datespot				Date location icons
+sea_datespot_text			Date text to go over the icons
+sea_global_menu				PoL top level buttons
+sea_home					PoL home screen buttons
+sea_love_gauge				PoL gauge
+sea_map_...					PoL map backgrounds, but in parts
+sea_talk					PoL phone calls
+sort_filter					more sorting/filtering text, similar to button_text_SortFilter
+unit_affiliation			Unit group icons
+unit_detail					Unit details
+unit_detail_sea				Unit details PoL version
+unit_menu_sozai				Circle icons, similar to 004-1_sozai
+unit_sort_country			Unit location mini banners
+unit_sort_filter			Unit sort buttons
+unit_sort_label				Unit sort text only
+unit_status					Unit status (battle version?)
+unit_status_2				Unit status better?
