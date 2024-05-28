@@ -12,6 +12,7 @@ If you need to install pygame, you can do so with a simple pip command:
 ```cmd
 pip install pygame
 ```
+NOTE: Pygame is only used for the Story Viewer (script 05), and is not needed for the extraction tools.
 
 ## Installation and Usage
 The numbered python scripts in the root folder outline the steps.
