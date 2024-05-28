@@ -28,10 +28,10 @@ Do note that in total the downloaded and extracted data will take roughly 72 GB 
   - This is limited to the types of data that UnityPy can extract. Animations, for example, are limited or missing.
 - 04_convert_all_sound_files.bat - Uses vgmstream to extract the sound files to .wav format.
   - The converted sound files will add another 30GB of disk space used.
-  - In order to run this step, you will need to download Vgmstream-cli from https://github.com/vgmstream/vgmstream/releases/ and extract that package into the extracted\StreamingAssets\android that will be created by step 3.
+  - In order to run this step, you will need to download Vgmstream-cli from https://github.com/vgmstream/vgmstream/releases/ and extract that package into the extracted\StreamingAssets\android folder that will be created by step 3.
   - You can skip this step and still proceed to step 5.
 - 05_read_story.py - A story emulator for the PotK story files.
-  - Currently only loads files by ID, set in the scripts.
+  - Currently only loads files by ID, set by a variable in the script itself.
   - This will load without the converted sound files, it will simply be silent.
 
 ## License
