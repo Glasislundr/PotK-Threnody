@@ -21,14 +21,16 @@ class Enviroment:
         self.DlcPath = "https://{0}.gu3.jp/dlc/production{1}/{2}/".format(
             "punk-dlc-review" if review_app_connect else "punk-dlc",
             self.DlcUrlBase,
-            "android"
+            "windows"
         )
 
-    def download_asset(self, atype, id):
+    def download_asset(self, atype, id, tries=3):
+        if tries < 0:
+            raise RuntimeError('Ran out of tries')
         url = f"{self.DlcPath}{atype}/{id}"
         # print(url)
         try:
             return urllib.request.urlopen(url, timeout=10).read()
         except:
             print(f"TimeOut: {url}")
-            return self.download_asset(atype, id)
+            return self.download_asset(atype, id, tries-1)

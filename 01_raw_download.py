@@ -4,6 +4,7 @@ from lib.downloader.paths import Paths, PATH
 from lib.downloader.api import Enviroment
 from lib.downloader import AssetBatchConverter
 from multiprocessing import Pool, cpu_count
+import traceback
 
 import logging
 logger = logging.getLogger(__name__)
@@ -24,7 +25,7 @@ def update_assetbundle(args):
 
         return fpath, 1
     except Exception as e:
-        print(e)
+        logger.error(traceback.format_exc())
         return fpath, 0
 
 def update_streamasset(args):
@@ -38,7 +39,7 @@ def update_streamasset(args):
 
         return fpath, 1
     except Exception as e:
-        print(e)
+        logger.error(traceback.format_exc())
         return fpath, 0
 
 def main():
@@ -79,7 +80,7 @@ def main():
             update_streamasset, ((env, fpath, item) for fpath, item in TODO)
         )
     ):
-        print(f"{i}/{len(TODO)} - {fpath}")
+        print(f"{i}/{len(TODO)} - {fpath}" if ext else f"{i}/{len(TODO)} - Failed to download {fpath}")
 
 
 if __name__ == "__main__":

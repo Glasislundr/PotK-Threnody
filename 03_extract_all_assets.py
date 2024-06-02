@@ -61,7 +61,7 @@ def main():
         if not os.path.exists(sfp):
             logger.error('ERROR: Source file not found - ' + sfp + '\n')
         elif os.path.getsize(sfp) != item["FileSize"]:
-            logger.warn('ERROR: Source file not expected size - ' + sfp + ' (expected: ' + str(item["FileSize"]) + ', found:' + str(os.path.getsize(sfp)) + ')\n')
+            logger.warning('ERROR: Source file not expected size - ' + sfp + ' (expected: ' + str(item["FileSize"]) + ', found:' + str(os.path.getsize(sfp)) + ')\n')
             TODO.append((fpath, item))
         else:
             TODO.append((fpath, item))
@@ -81,7 +81,7 @@ def main():
         if not os.path.exists(sfp):
             logger.error('ERROR: Source file not found - ' + sfp + '\n')
         elif os.path.getsize(sfp) != item["FileSize"]:
-            logger.warn('ERROR: Source file not expected size - ' + sfp + ' (expected: ' + str(item["FileSize"]) + ', found:' + str(os.path.getsize(sfp)) + ')\n')
+            logger.warning('ERROR: Source file not expected size - ' + sfp + ' (expected: ' + str(item["FileSize"]) + ', found:' + str(os.path.getsize(sfp)) + ')\n')
             TODO.append((fpath, item))
         else:
             TODO.append((fpath, item))
