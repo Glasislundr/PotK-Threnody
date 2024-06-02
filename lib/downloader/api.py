@@ -24,11 +24,13 @@ class Enviroment:
             "android"
         )
 
-    def download_asset(self, atype, id):
+    def download_asset(self, atype, id, tries=3):
+        if tries < 0:
+            raise RuntimeError('Ran out of tries')
         url = f"{self.DlcPath}{atype}/{id}"
         # print(url)
         try:
             return urllib.request.urlopen(url, timeout=10).read()
         except:
             print(f"TimeOut: {url}")
-            return self.download_asset(atype, id)
+            return self.download_asset(atype, id, tries-1)
