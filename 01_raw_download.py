@@ -1,8 +1,8 @@
 import os
 import UnityPy
-from lib.paths import Paths, PATH
-from lib.api import Enviroment
-from lib import AssetBatchConverter
+from lib.downloader.paths import Paths, PATH
+from lib.downloader.api import Enviroment
+from lib.downloader import AssetBatchConverter
 from multiprocessing import Pool, cpu_count
 
 import logging
