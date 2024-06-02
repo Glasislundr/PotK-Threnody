@@ -13,11 +13,23 @@ VER_FP = os.path.join(PATH, "data", "version.json")
 class Paths:
     def __init__(self, download_when_present=False):
         if os.path.exists(os.path.join(PATH, "data", "paths.json")) and not download_when_present:
-            with open(os.path.join(PATH, "data", "paths.json"), 'r', encoding="utf-16") as pfile:
+            with open(os.path.join(PATH, "data", "paths.json"), 'r', encoding="utf-8") as pfile:
                 PATHS = json.loads(pfile.read())
-            self.AssetBundle = PATHS['AssetBundle']
-            self.Resource = PATHS["Resource"]
-            self.StreamingAssets = PATHS["StreamingAssets"]
+            self.AssetBundle = {}
+            for key in PATHS['AssetBundle']:
+                item = PATHS['AssetBundle'][key]
+                self.AssetBundle[key] = {'FileName': item[0], 'ObjectType': ObjectType[item[1]], 'FileSize': item[2], 'Steps': item[3]}
+            #self.AssetBundle = PATHS['AssetBundle']
+            #self.Resource = PATHS["Resource"]
+            self.Resource = {}
+            for key in PATHS['Resource']:
+                item = PATHS['Resource'][key]
+                self.Resource[key] = {'ObjectType': ObjectType[item[0]], 'Steps': item[1]}
+            #self.StreamingAssets = PATHS["StreamingAssets"]
+            self.StreamingAssets = {}
+            for key in PATHS['StreamingAssets']:
+                item = PATHS['StreamingAssets'][key]
+                self.StreamingAssets[key] = {'FileName': item[0], 'Extension': item[1], 'ObjectType': ObjectType[item[2]], 'FileSize': item[3], 'Steps': item[4]}
         else:
             # downloads paths
             print("DOWNLOAD PATHS")
