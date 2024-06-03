@@ -22,7 +22,7 @@ class PotkPaths:
     unitArtFacePath = 'Face'
     specialEffectArtPath = os.path.join(r'StreamingAssets', assetBundlePath, 'EventImages')
     
-    font_path = os.path.join(localRootPath, 'resources/static', 'NotoSansJP-Regular.ttf')
+    font_path = os.path.join(localRootPath, 'static', 'NotoSansJP-Regular.ttf')
     
     MusicFilename = 'Music.json'
     UnitUnitFilename = 'UnitUnit.json'
