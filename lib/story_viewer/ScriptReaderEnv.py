@@ -48,6 +48,9 @@ class ScriptReaderEnv:
         self.nextTargetLabel = None
         self.updated = True
         self.lastVoice = None
+        
+        PotkRes.preloadStandardStoryGuiElements()
+        PotkRes.preloadUnitData()
     def setLockoutTime(self, time):
         self.timeLockout = time
     def waitForInput(self):

@@ -61,8 +61,20 @@ class PotkPaths:
         return os.path.join(PotkPaths.resRootPath, PotkPaths.unitMobArtPath, str(resId), PotkPaths.unitArtFacePath, face)
         
     @staticmethod
-    def getScriptFilePath(scriptId):
+    def getExtractedMasterDataFilePath(scriptId):
+        return os.path.join(PotkPaths.masterdataPath, scriptId+'.json')
+
+    @staticmethod
+    def getInternalMasterDataPath(scriptId):
+        return 'MasterData/' + scriptId
+        
+    @staticmethod
+    def getExtractedScriptFilePath(scriptId):
         return os.path.join(PotkPaths.scriptPath, scriptId+'.json')
+
+    @staticmethod
+    def getInternalScriptPath(scriptId):
+        return 'MasterData/ScriptScript_part_' + scriptId
 
     @staticmethod
     def getMusicPath(fileName):

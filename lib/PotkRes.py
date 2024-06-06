@@ -5,6 +5,7 @@ import traceback
 
 from lib.spritesheet import spritesheet
 from lib.PotkPaths import PotkPaths
+import lib.MasterData as MasterData
 
 def extract_assetbundle(args):
     fpath, item = args
@@ -105,93 +106,100 @@ class PotkRes:
         print(f'Couldn\'t find music file: {path}/{cue}')
         return None
         
-    try:
-        #========================
-        # Load GUI elements
-        guiSpritesheet = spritesheet(os.path.join(PotkPaths.resRootPath, PotkPaths.storyGuiPath, '009-3_sozai_png.png'))
-        guiDiagBorder = guiSpritesheet.image_at((565, 357, 700-565, 868-357))
-        guiDiagBorderBot = pygame.transform.smoothscale(pygame.transform.rotate(guiDiagBorder.copy(), 90), (720, 190))
-        guiDiagBorderTop = pygame.transform.smoothscale(pygame.transform.rotate(guiDiagBorder, -90), (720, 190))
+    @classmethod
+    def preloadStandardStoryGuiElements(cls):
+        try:
+            #========================
+            # Load GUI elements
+            guiSpritesheet = spritesheet(os.path.join(PotkPaths.resRootPath, PotkPaths.storyGuiPath, '009-3_sozai_png.png'))
+            cls.guiDiagBorder = guiSpritesheet.image_at((565, 357, 700-565, 868-357))
+            cls.guiDiagBorderBot = pygame.transform.smoothscale(pygame.transform.rotate(cls.guiDiagBorder.copy(), 90), (720, 190))
+            cls.guiDiagBorderTop = pygame.transform.smoothscale(pygame.transform.rotate(cls.guiDiagBorder, -90), (720, 190))
 
-        guiQuestionTextBox = guiSpritesheet.image_at((0, 457, 485, 578-457))
-        guiQuestionAnswerButton = pygame.transform.smoothscale(guiSpritesheet.image_at((0, 4, 367, 93-4)), (616, 100))
-        guiQuestionAnswerButtonClicked = pygame.transform.smoothscale(guiSpritesheet.image_at((611, 934, 978-611, 1023-934)), (616, 100))
-        guiQuestionQuestionText = guiSpritesheet.image_at((367, 382, 561-367, 453-382))
-        guiQuestionArrowDark = guiSpritesheet.image_at((611, 880, 1012-611, 930-880))
-        guiQuestionArrowLight = guiSpritesheet.image_at((704, 709, 1006-704, 751-709))
+            cls.guiQuestionTextBox = guiSpritesheet.image_at((0, 457, 485, 578-457))
+            cls.guiQuestionAnswerButton = pygame.transform.smoothscale(guiSpritesheet.image_at((0, 4, 367, 93-4)), (616, 100))
+            cls.guiQuestionAnswerButtonClicked = pygame.transform.smoothscale(guiSpritesheet.image_at((611, 934, 978-611, 1023-934)), (616, 100))
+            cls.guiQuestionQuestionText = guiSpritesheet.image_at((367, 382, 561-367, 453-382))
+            cls.guiQuestionArrowDark = guiSpritesheet.image_at((611, 880, 1012-611, 930-880))
+            cls.guiQuestionArrowLight = guiSpritesheet.image_at((704, 709, 1006-704, 751-709))
 
-        guiTextBoxBackgroundR = pygame.transform.smoothscale(pygame.transform.flip(guiSpritesheet.image_at((0, 872, 608, 1023-872)), True, True), (684, 159))
-        guiTextBoxBackgroundG = pygame.transform.smoothscale(guiSpritesheet.image_at((0, 363, 363, 453-363)), (684, 159))
-        guiTextBoxNameP = guiSpritesheet.image_at((371, 5, 608-371, 34-5))
-        guiTextBoxNameG = guiSpritesheet.image_at((612, 5, 849-612, 34-5))
-        guiTextBoxStandardFrameY = pygame.transform.smoothscale(guiSpritesheet.image_at((704, 757, 861-704, 876-757)), (618,119))
-        guiTextBoxStandardFrameB = pygame.transform.smoothscale(guiSpritesheet.image_at((865, 756, 1012-865, 876-756)), (618,119))
-        guiTextBoxSpikeFrameO = pygame.transform.smoothscale(guiSpritesheet.image_at((0, 98, 343, 260-98)), (618,119))
-        guiTextBoxSpikeFrameY = pygame.transform.smoothscale(guiSpritesheet.image_at((347, 98, 675-347, 260-98)), (618,119))
-        guiTextBoxThoughtFrameP = pygame.transform.smoothscale(guiSpritesheet.image_at((0, 720, 561, 868-720)), (618,119))
-        guiTextBoxThoughtFrameG = pygame.transform.smoothscale(guiSpritesheet.image_at((0, 582, 450, 716-582)), (618,119))
-        guiTextBoxNextArrow = guiSpritesheet.image_at((853, 8, 892-853, 34-8))
+            cls.guiTextBoxBackgroundR = pygame.transform.smoothscale(pygame.transform.flip(guiSpritesheet.image_at((0, 872, 608, 1023-872)), True, True), (684, 159))
+            cls.guiTextBoxBackgroundG = pygame.transform.smoothscale(guiSpritesheet.image_at((0, 363, 363, 453-363)), (684, 159))
+            cls.guiTextBoxNameP = guiSpritesheet.image_at((371, 5, 608-371, 34-5))
+            cls.guiTextBoxNameG = guiSpritesheet.image_at((612, 5, 849-612, 34-5))
+            cls.guiTextBoxStandardFrameY = pygame.transform.smoothscale(guiSpritesheet.image_at((704, 757, 861-704, 876-757)), (618,119))
+            cls.guiTextBoxStandardFrameB = pygame.transform.smoothscale(guiSpritesheet.image_at((865, 756, 1012-865, 876-756)), (618,119))
+            cls.guiTextBoxSpikeFrameO = pygame.transform.smoothscale(guiSpritesheet.image_at((0, 98, 343, 260-98)), (618,119))
+            cls.guiTextBoxSpikeFrameY = pygame.transform.smoothscale(guiSpritesheet.image_at((347, 98, 675-347, 260-98)), (618,119))
+            cls.guiTextBoxThoughtFrameP = pygame.transform.smoothscale(guiSpritesheet.image_at((0, 720, 561, 868-720)), (618,119))
+            cls.guiTextBoxThoughtFrameG = pygame.transform.smoothscale(guiSpritesheet.image_at((0, 582, 450, 716-582)), (618,119))
+            cls.guiTextBoxNextArrow = guiSpritesheet.image_at((853, 8, 892-853, 34-8))
 
-        guiTextBoxSpeaking = guiSpritesheet.image_at((453, 584, 495-453, 637-584))
-        guiTextBoxSpeakingFlip = pygame.transform.flip(guiTextBoxSpeaking.copy(), True, False)
+            cls.guiTextBoxSpeaking = guiSpritesheet.image_at((453, 584, 495-453, 637-584))
+            cls.guiTextBoxSpeakingFlip = pygame.transform.flip(cls.guiTextBoxSpeaking.copy(), True, False)
 
-        #========================
-    except Exception as e:
-        print(traceback.format_exc())
-    try:
-        #========================
-        # Load Unit Data
-        udict = {}
-        with open(os.path.join(PotkPaths.masterdataPath, PotkPaths.UnitUnitFilename), 'r', encoding="utf8") as file:
-            jdata = json.load(file)
-        for unit in jdata:
-            udict[unit['ID']] = unit
-            udict[unit['ID']]['type'] = 'unit'
+            #========================
+        except Exception as e:
+            print(traceback.format_exc())
 
-        uStoryDict = {}
-        with open(os.path.join(PotkPaths.masterdataPath, PotkPaths.UnitUnitStoryFilename), 'r', encoding="utf8") as file:
-            jdata = json.load(file)
-        for unit in jdata:
-            uStoryDict[unit['ID']] = unit
+    @classmethod
+    def preloadUnitData(cls):
+        try:
+            #========================
+            # Load Unit Data
+            if hasattr(cls, 'udict'):
+                return
+            cls.udict = {}
+            jdata = MasterData.getMasterData('UnitUnit')
+            for unit in jdata:
+                cls.udict[unit['ID']] = unit
+                cls.udict[unit['ID']]['type'] = 'unit'
 
-        for uid, unit in udict.items():
-            if unit['resource_reference_unit_id_UnitUnit'] in uStoryDict:
-                udict[unit['ID']]['face_x'] = uStoryDict[unit['resource_reference_unit_id_UnitUnit']]['face_x']
-                udict[unit['ID']]['face_y'] = uStoryDict[unit['resource_reference_unit_id_UnitUnit']]['face_y']
-                udict[unit['ID']]['story_texture_scale'] = uStoryDict[unit['resource_reference_unit_id_UnitUnit']]['story_texture_scale']
-                udict[unit['ID']]['story_texture_x'] = uStoryDict[unit['resource_reference_unit_id_UnitUnit']]['story_texture_x']
-                udict[unit['ID']]['story_texture_y'] = uStoryDict[unit['resource_reference_unit_id_UnitUnit']]['story_texture_y']
-            else:
-                # print('Missing UnitStory data for: ' + str(unit['ID']))
-                udict[unit['ID']]['face_x'] = 0
-                udict[unit['ID']]['face_y'] = 0
-                udict[unit['ID']]['story_texture_scale'] = 1
-                udict[unit['ID']]['story_texture_x'] = 0
-                udict[unit['ID']]['story_texture_y'] = 0
+            uStoryDict = {}
+            jdata = MasterData.getMasterData('UnitUnitStory')
+            for unit in jdata:
+                uStoryDict[unit['ID']] = unit
 
-        for uid, unit in uStoryDict.items():
-            if unit['ID'] not in udict:
-                udict[unit['ID']] = {}
-                udict[unit['ID']]['type'] = 'mob'
-                udict[unit['ID']]['resource_reference_unit_id_MobUnit'] = unit['ID']
-                udict[unit['ID']]['face_x'] = unit['face_x']
-                udict[unit['ID']]['face_y'] = unit['face_y']
-                udict[unit['ID']]['story_texture_scale'] = unit['story_texture_scale']
-                udict[unit['ID']]['story_texture_x'] = unit['story_texture_x']
-                udict[unit['ID']]['story_texture_y'] = unit['story_texture_y']
+            for uid, unit in cls.udict.items():
+                if unit['resource_reference_unit_id_UnitUnit'] in uStoryDict:
+                    cls.udict[unit['ID']]['face_x'] = uStoryDict[unit['resource_reference_unit_id_UnitUnit']]['face_x']
+                    cls.udict[unit['ID']]['face_y'] = uStoryDict[unit['resource_reference_unit_id_UnitUnit']]['face_y']
+                    cls.udict[unit['ID']]['story_texture_scale'] = uStoryDict[unit['resource_reference_unit_id_UnitUnit']]['story_texture_scale']
+                    cls.udict[unit['ID']]['story_texture_x'] = uStoryDict[unit['resource_reference_unit_id_UnitUnit']]['story_texture_x']
+                    cls.udict[unit['ID']]['story_texture_y'] = uStoryDict[unit['resource_reference_unit_id_UnitUnit']]['story_texture_y']
+                else:
+                    # print('Missing UnitStory data for: ' + str(unit['ID']))
+                    cls.udict[unit['ID']]['face_x'] = 0
+                    cls.udict[unit['ID']]['face_y'] = 0
+                    cls.udict[unit['ID']]['story_texture_scale'] = 1
+                    cls.udict[unit['ID']]['story_texture_x'] = 0
+                    cls.udict[unit['ID']]['story_texture_y'] = 0
 
-        #========================
-    except Exception as e:
-        print(traceback.format_exc())
-    try:
-        #========================
-        # Load Music Data
-        musdict = {}
-        with open(os.path.join(PotkPaths.masterdataPath, PotkPaths.MusicFilename), 'r', encoding="utf8") as file:
-            jdata = json.load(file)
-        for song in jdata:
-            musdict[song['bgm_name']] = song
+            for uid, unit in uStoryDict.items():
+                if unit['ID'] not in cls.udict:
+                    cls.udict[unit['ID']] = {}
+                    cls.udict[unit['ID']]['type'] = 'mob'
+                    cls.udict[unit['ID']]['resource_reference_unit_id_MobUnit'] = unit['ID']
+                    cls.udict[unit['ID']]['face_x'] = unit['face_x']
+                    cls.udict[unit['ID']]['face_y'] = unit['face_y']
+                    cls.udict[unit['ID']]['story_texture_scale'] = unit['story_texture_scale']
+                    cls.udict[unit['ID']]['story_texture_x'] = unit['story_texture_x']
+                    cls.udict[unit['ID']]['story_texture_y'] = unit['story_texture_y']
 
-        #========================
-    except Exception as e:
-        print(traceback.format_exc())
+            #========================
+        except Exception as e:
+            print(traceback.format_exc())
+
+    @classmethod
+    def preloadJukeboxData(cls):
+        try:
+            #========================
+            # Load Music Data
+            cls.musdict = {}
+            jdata = MasterData.getMasterData('Music')
+            for song in jdata:
+                cls.musdict[song['bgm_name']] = song
+
+            #========================
+        except Exception as e:
+            print(traceback.format_exc())
