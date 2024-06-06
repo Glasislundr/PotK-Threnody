@@ -163,3 +163,6 @@ cache/
 extracted/
 resources/
 masterdata/
+archive/
+
+conf.json
