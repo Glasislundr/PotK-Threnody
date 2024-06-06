@@ -6,34 +6,22 @@ from lib.downloader.master_data_reader import MasterDataReader
 from lib.downloader.paths import Paths, PATH
 
 paths = Paths().__dict__
-assembly = os.path.join(PATH,*['lib','downloader','assembly','MasterDataTable'])
+master_data_parser_json = os.path.join(PATH,*['lib','downloader','master_data_parser.json'])
 cache = os.path.join(PATH,*['data','cache'])
 masterdata = os.path.join(PATH,'masterdata')
 
-if not os.path.isdir(assembly):
-    input('couldn\'t find assembly')
+if not os.path.exists(master_data_parser_json):
+    input('couldn\'t find master_data_parser_json')
 os.makedirs(masterdata, exist_ok=True)
 # 1 - name, 2 - args
 rePARSE = re.compile(r'return new ([^\n]+?)\(\)\s*\{\s*(.+?)\s*\};', re.S)
 # 1 - name, 2 - func, 3 - arg
 reARG = re.compile(r'\s*(.+?) = reader.(.+?)\((.*?)?\),')
 
+master_data_parser = json.load(open(master_data_parser_json, 'r', encoding='utf8'))
 
-def create_parser(correct_name, text):
-    args = None
-    for match in rePARSE.finditer(text):
-        if match[1] == correct_name:
-            args = match[2]
-            break
-    if not args:
-        raise EnvironmentError
-    parser = []  # key, func, arg
-    for match in reARG.finditer(args+","):
-        parser.append([
-            match[1], match[2], (True if match[3] ==
-                                 'true' else False) if match[3] else None
-        ])
-    return parser
+def create_parser(correct_name):
+    return master_data_parser[correct_name]
 
 
 for fpath, item in paths['AssetBundle'].items():
@@ -50,9 +38,7 @@ for fpath, item in paths['AssetBundle'].items():
 
             # create parser
             pname = name.split('_',1)[0]
-            apath = os.path.join(assembly, f"{pname}.cs")
-            adata = open(apath, 'rt', encoding='utf8').read()
-            parser = create_parser(pname, adata)
+            parser = create_parser(pname)
             if not parser:
                 raise EnvironmentError
 
