@@ -3,6 +3,7 @@ import os
 from lib.PotkPaths import PotkPaths
 from lib.PotkRes import PotkRes
 from lib.conf.conf import conf
+import lib.AssetBundle as AssetBundle
 
 class ScriptFileActions:
     class WaitForUser:
@@ -36,7 +37,7 @@ class ScriptFileActions:
             
     class SetBackground:
         def __init__(self, name):
-            self.img = PotkRes.getGameImage(os.path.join(PotkPaths.resRootPath,PotkPaths.bkgPath,name.replace('"','')+'.png'))
+            self.img = AssetBundle.getBackground(name.replace('"',''))
         def run(self, env):
             env.setBackgroundImage(self.img)
     class SetSpeaker:
