@@ -94,8 +94,8 @@ class ScriptReaderEnv:
             
     def setBackgroundImage(self,img):
         self.background = img
-        self.backgroundX = 0
-        self.backgroundY = 0
+        self.backgroundX = (conf.display_width / 2) - (img.get_width() / 2)
+        self.backgroundY = (conf.display_height / 2) - (img.get_height() / 2)
         self.updated = True
     def setTextboxBackground(self, frameType, boxId):
         #TODO what is second arg??
@@ -248,9 +248,13 @@ class ScriptReaderEnv:
                 tarPosY = 850 - arimg.get_height()
                 display.blit(arimg, (tarPosX,tarPosY))
 
+        # Draw Special Effects
+        for name, effect in self.effects.items():
+            effect.draw(display)
+        
         # Draw GUI elements
-        display.blit(PotkRes.guiDiagBorderTop, (0,0))
-        display.blit(PotkRes.guiDiagBorderBot, (0,display.get_height() - PotkRes.guiDiagBorderBot.get_height()))
+        display.blit(PotkRes.guiDiagBorderTop, ((conf.display_width / 2) - (PotkRes.guiDiagBorderTop.get_width() / 2),0))
+        display.blit(PotkRes.guiDiagBorderBot, ((conf.display_width / 2) - (PotkRes.guiDiagBorderBot.get_width() / 2),conf.display_height - PotkRes.guiDiagBorderBot.get_height()))
 
         if self.textboxes[0].visible:
             if self.textboxes[0].background:
@@ -319,10 +323,6 @@ class ScriptReaderEnv:
                 offset += self.textboxes[1].textspacing
             if self.activeTextBox == self.textboxes[1]:
                 display.blit(PotkRes.guiTextBoxNextArrow, (611,946))
-        
-        # Draw Special Effects
-        for name, effect in self.effects.items():
-            effect.draw(display)
         
         for button in self.buttons:
             button.draw(display)

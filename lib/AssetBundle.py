@@ -55,9 +55,17 @@ def getGUI(guiID):
         return GUIElements(guiID)
 
 def getGUIMask(mask):
-    epath = os.path.join(PotkPaths.resRootPath, PotkPaths.maskPath, mask + '.png')
     ipath = r'GUI/009-3_sozai/' + mask
-    return getTexture2D(epath, ipath)
+    
+    if ipath in loaded_texture_2ds:
+        return loaded_texture_2ds[ipath]
+    
+    epath = os.path.join(PotkPaths.resRootPath, PotkPaths.maskPath, mask + '.png')
+    loadedMask = getTexture2D(epath, ipath)
+    recolor = pygame.Surface(loadedMask.get_size(), pygame.SRCALPHA)
+    recolor.fill((255,255,255,0))
+    loadedMask.blit(recolor, (0,0), special_flags = pygame.BLEND_RGBA_MAX)
+    return loadedMask
 
 class GUIElements():
     image: pygame.Surface

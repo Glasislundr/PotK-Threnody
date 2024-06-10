@@ -5,6 +5,9 @@ from lib.PotkRes import PotkRes
 from lib.PotkPaths import PotkPaths
 from lib.conf.conf import conf
 import lib.StreamingAsset as StreamingAsset
+import lib.AssetBundle as AssetBundle
+
+mask_list = [AssetBundle.getGUIMask('mask_Chara_L'),AssetBundle.getGUIMask('mask_Chara_C'),AssetBundle.getGUIMask('mask_Chara_R')]
 
 class Character:
     cid: int
@@ -54,6 +57,9 @@ class Character:
         self.story_texture_offset = (PotkRes.udict[self.cid]['story_texture_x'], PotkRes.udict[self.cid]['story_texture_y'])
         self.face_offset = (PotkRes.udict[self.cid]['face_x'], PotkRes.udict[self.cid]['face_y'])
         self.pos = self.storyPosToUnitPos(self.storyPos)
+        theMask = mask_list[min(2,max(0,self.storyPos-1))].copy()
+        theMask.blit(self.curImg, (theMask.get_width()/2 - self.curImg.get_width()/2, theMask.get_height()/2 - self.curImg.get_height()/2), special_flags = pygame.BLEND_RGBA_MIN)
+        self.curImg = theMask
 
     def storyPosToUnitPos(self, pos):
         tarPosX = (conf.display_width / 6) * (pos) - (self.curImg.get_width() / 2) + self.story_texture_offset[0]
@@ -109,6 +115,7 @@ class Character:
     def setScale(self, scale):
         self.scale = scale
         modscale = scale / self.image.get_height() * self.curImg.get_height()
+        print(f'Setting scale (for {self.cid}) to modscale: {modscale}')
         self.curImg = pygame.transform.smoothscale_by(self.curImg, modscale)
         if not self.moving:
             self.pos = self.storyPosToUnitPos(self.storyPos)
@@ -119,6 +126,9 @@ class Character:
         if self.eye != 'normal' and self.eyeImg is not None:
             self.curImg.blit(self.eyeImg, (self.face_offset[0],self.curImg.get_height() - self.eyeImg.get_height() - self.face_offset[1]))
         self.curImg = pygame.transform.smoothscale_by(self.curImg, self.scale * self.baseScale)
+        theMask = mask_list[min(2,max(0,self.storyPos-1))].copy()
+        theMask.blit(self.curImg, (theMask.get_width()/2 - self.curImg.get_width()/2, theMask.get_height()/2 - self.curImg.get_height()/2), special_flags = pygame.BLEND_RGBA_MIN)
+        self.curImg = theMask
         self.curImg.set_alpha(int(self.alpha * 255))
         
     def draw(self, display):
