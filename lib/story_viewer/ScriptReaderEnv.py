@@ -149,7 +149,7 @@ class ScriptReaderEnv:
         self.characterLayers[c.layer] += [c]
         self.updated = True
     def setCharacterMask(self,cid,mask):
-        self.characters[cid].maskOn = (mask == 'on')
+        self.characters[cid].setMaskOn(mask == 'on')
         self.updated = True
     def setCharacterFace(self,cid,face):
         self.characters[cid].changeFace(face)

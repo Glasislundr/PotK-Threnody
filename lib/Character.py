@@ -97,14 +97,17 @@ class Character:
         else:
             self.eyeImg = None
         self.rebuildCurImage()
+    def setMaskOn(self, maskOn):
+        self.maskOn = maskOn
+        self.rebuildCurImage()
     def setStoryPos(self, pos):
         self.storyPos = pos
         self.pos = self.storyPosToUnitPos(pos)
-        #Update mask
+        self.rebuildCurImage()
     def startMoveToStoryPos(self, pos):
         self.storyPos = pos
         self.moving = True
-        #Update mask
+        self.rebuildCurImage()
     def finishMoving(self):
         self.moving = False
     def setPos(self, pos):
@@ -126,9 +129,10 @@ class Character:
         if self.eye != 'normal' and self.eyeImg is not None:
             self.curImg.blit(self.eyeImg, (self.face_offset[0],self.curImg.get_height() - self.eyeImg.get_height() - self.face_offset[1]))
         self.curImg = pygame.transform.smoothscale_by(self.curImg, self.scale * self.baseScale)
-        theMask = mask_list[min(2,max(0,self.storyPos-1))].copy()
-        theMask.blit(self.curImg, (theMask.get_width()/2 - self.curImg.get_width()/2, theMask.get_height()/2 - self.curImg.get_height()/2), special_flags = pygame.BLEND_RGBA_MIN)
-        self.curImg = theMask
+        if self.maskOn:
+            theMask = mask_list[min(2,max(0,self.storyPos-1))].copy()
+            theMask.blit(self.curImg, (theMask.get_width()/2 - self.curImg.get_width()/2, theMask.get_height()/2 - self.curImg.get_height()/2), special_flags = pygame.BLEND_RGBA_MIN)
+            self.curImg = theMask
         self.curImg.set_alpha(int(self.alpha * 255))
         
     def draw(self, display):
