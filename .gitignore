@@ -161,7 +161,7 @@ cython_debug/
 # Threnody extracted data folders are not needed in the repo
 cache/
 extracted/
-resources/
+extracted_bak/
 masterdata/
 archive/
 
