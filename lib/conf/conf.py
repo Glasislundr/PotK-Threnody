@@ -6,7 +6,7 @@ CONF_FILE_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'conf
 
 class conf:
     #Default values, generally overwritten by the conf.json file
-    display_width = 720
+    display_width = 640
     display_height = 1136
     music_volume = 0.25
     voice_volume = 0.5

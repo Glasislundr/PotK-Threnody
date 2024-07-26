@@ -3,6 +3,7 @@ import os
 from lib.PotkPaths import PotkPaths
 from lib.PotkRes import PotkRes
 from lib.conf.conf import conf
+import lib.AssetBundle as AssetBundle
 
 class ScriptFileActions:
     class WaitForUser:
@@ -36,7 +37,7 @@ class ScriptFileActions:
             
     class SetBackground:
         def __init__(self, name):
-            self.img = PotkRes.getGameImage(os.path.join(PotkPaths.resRootPath,PotkPaths.bkgPath,name.replace('"','')+'.png'))
+            self.img = AssetBundle.getBackground(name.replace('"',''))
         def run(self, env):
             env.setBackgroundImage(self.img)
     class SetSpeaker:
@@ -165,10 +166,10 @@ class ScriptFileActions:
             self.time = time
         def run(self, env):
             if self.time > 0:
-                #print('Set Alpha Duration: ' + str(self.cid) + ' to ' + str(self.alpha) + ' over ' + str(self.time))
                 char = env.getCharacter(self.cid)
-                tarPos = char.storyPosToUnitPos(self.pos)
                 env.startMovingCharacterToStoryPos(self.cid, self.pos)
+                tarPos = char.storyPosToUnitPos(self.pos)
+                print(f'Moving unit over time: from {char.pos} to {tarPos} (based on {self.pos})')
                 env.registerTimedAction(ScriptFileActions.MoveCharacterPeriodic(env, self.cid, tarPos[0], tarPos[1], self.time))
             else:
                 #print('Set Alpha Instant: ' + str(self.cid) + ' to ' + str(self.alpha))
@@ -178,9 +179,9 @@ class ScriptFileActions:
             char = env.getCharacter(cid)
             self.cid = cid
             self.xTarget = x
-            self.yTarget = y
+            self.yTarget = char.pos[1]
             self.xStep = (x - char.pos[0]) / (time * conf.fps)
-            self.yStep = (y - char.pos[1]) / (time * conf.fps)
+            self.yStep = 0#(y - char.pos[1]) / (time * conf.fps)
             print(f'Creating movement from x:{char.pos[0]} to x:{x} and y:{char.pos[1]} to y:{y}')
             self.timesRemaining = int(time * conf.fps + 2)
             print(f'Move Character Periodic action: {self.cid} to {self.xTarget},{self.yTarget}  by changing {self.xStep},{self.yStep} {self.timesRemaining} times')

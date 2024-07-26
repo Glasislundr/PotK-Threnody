@@ -36,6 +36,112 @@ The linking used here is mainly based on the ACB loading done by Vgmstream:
  
 """
 
+class ACB():
+    parsed_file: list
+    
+    def __init__(self, inPath):
+        with open(inPath, 'br') as buffer:
+            obj = utf.parseUtf(buffer.read(), True)
+        self.parsed_file = reformatAcbFile(obj)
+    
+    def getFirstWaveformForCue(self, cueName):
+        for acb in self.parsed_file:
+            for cue in acb['Cues']:
+                if cueName == cue['CueName']:
+                    if 'Waveform' in cue:
+                        return cue['Waveform']
+                    if 'Synth' in cue:
+                        wave = getWaveformFromSynth(cue['Synth'])
+                        if wave is not None:
+                            return wave
+                    if 'Sequence' in cue:
+                        wave = getWaveformFromSequence(cue['Sequence'])
+                        if wave is not None:
+                            return wave
+                    if 'BlockSequence' in cue:
+                        wave = getWaveformFromBlockSequence(cue['BlockSequence'])
+                        if wave is not None:
+                            return wave
+                        
+                                
+def getWaveformFromSynth(syn):
+    if 'Command' in syn:
+        for cmdAct in syn['Command']['CommandActions']:
+            wave = getWaveformFromCommand(cmdAct)
+            if wave is not None:
+                return wave
+    if 'SubItems' in syn:
+        for subItem in syn['SubItems']:
+            if subItem['SuperType'] == 'Waveform':
+                return subItem
+            elif subItem['SuperType'] == 'Synth':
+                wave = getWaveformFromSynth(subItem)
+                if wave is not None:
+                    return wave
+            elif subItem['SuperType'] == 'Sequence':
+                wave = getWaveformFromSequence(subItem)
+                if wave is not None:
+                    return wave
+    return None
+
+def getWaveformFromSequence(seq):
+    if 'Tracks' in seq:
+        for trk in seq['Tracks']:
+            wave = getWaveformFromTrack(trk)
+            if wave is not None:
+                return wave
+    if 'Command' in seq:
+        for cmdAct in seq['Command']['CommandActions']:
+            wave = getWaveformFromCommand(cmdAct)
+            if wave is not None:
+                return wave
+    return None
+
+def getWaveformFromBlockSequence(seq):
+    if 'Blocks' in seq:
+        for blk in seq['Blocks']:
+            wave = getWaveformFromBlock(blk)
+            if wave is not None:
+                return wave
+    if 'Tracks' in seq:
+        for trk in seq['Tracks']:
+            wave = getWaveformFromTrack(trk)
+            if wave is not None:
+                return wave
+    return None
+
+def getWaveformFromBlock(blk):
+    if 'Tracks' in blk:
+        for trk in blk['Tracks']:
+            wave = getWaveformFromTrack(trk)
+            if wave is not None:
+                return wave
+    return None
+
+def getWaveformFromTrack(trk):
+    if 'Event' in trk:
+        for cmdAct in trk['Event']['CommandActions']:
+            wave = getWaveformFromCommand(cmdAct)
+            if wave is not None:
+                return wave
+    if 'Command' in trk:
+        for cmdAct in trk['Command']['CommandActions']:
+            wave = getWaveformFromCommand(cmdAct)
+            if wave is not None:
+                return wave
+    return None
+
+def getWaveformFromCommand(cmd):
+    if 'Synth' in cmd:
+        wave = getWaveformFromSynth(cmd['Synth'])
+        if wave is not None:
+            return wave
+    if 'Sequence' in cmd:
+        wave = getWaveformFromSequence(cmd['Sequence'])
+        if wave is not None:
+            return wave
+    return None
+
 def readAcbFile(inPath, outPath=None):
     if (not outPath):
         pathInfo = os.path.splitext(inPath)    

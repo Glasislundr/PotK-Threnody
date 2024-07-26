@@ -3,6 +3,7 @@ import pygame
 from lib.PotkRes import PotkRes
 from lib.PotkPaths import PotkPaths
 from lib.conf.conf import conf
+import lib.StreamingAsset as StreamingAsset
 
 halfScreenWidth = conf.display_width / 2
 halfScreenHeight = conf.display_height / 2
@@ -26,7 +27,7 @@ class SpecialEffect:
         self.scale = 1.0
         self.layer = 0
 
-        self.image = PotkRes.getGameImage(PotkPaths.getSpecialEffectArtPath(self.seName)).convert_alpha()
+        self.image = StreamingAsset.getSpecialEffect(self.seName).convert_alpha()
         self.rebuildCurImage()
         self.screenPos = createScreenPos(self.pos, (self.curImg.get_width(), self.curImg.get_height()))
 

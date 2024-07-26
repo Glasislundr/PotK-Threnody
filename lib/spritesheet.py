@@ -9,13 +9,16 @@ https://www.pygame.org/wiki/Spritesheet
 
 import pygame
 
-class spritesheet(object):
-    def __init__(self, filename):
-        try:
-            self.sheet = pygame.image.load(filename).convert_alpha()
-        except pygame.error as e:
-            print('Unable to load spritesheet image:', filename)
-            raise SystemExit(repr(e))
+class Spritesheet(object):
+    def __init__(self, image):
+        if type(image) is str:
+            try:
+                self.sheet = pygame.image.load(filename).convert_alpha()
+            except pygame.error as e:
+                print('Unable to load spritesheet image:', filename)
+                raise SystemExit(repr(e))
+        else:
+            self.sheet = image
     # Load a specific image from a specific rectangle
     def image_at(self, rectangle, colorkey = None):
         "Loads image from x,y,x+offset,y+offset"

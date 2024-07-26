@@ -3,6 +3,7 @@ import json
 
 from lib.PotkPaths import PotkPaths
 from lib.story_viewer.ScriptFileActions import ScriptFileActions
+import lib.MasterData as MasterData
 
 class ParsedScriptFile:
     actions: list
@@ -11,9 +12,7 @@ class ParsedScriptFile:
     def __init__(self, scriptId: str):
         self.actions = []
         self.itr = 0
-        with open(PotkPaths.getScriptFilePath(scriptId), 'r', encoding="utf8") as file:
-            data = file.read()
-        jsdt = json.loads(data)
+        jsdt = MasterData.getScript(scriptId)
         scriptTxt = jsdt[0]['script']
         scriptLst = scriptTxt.split('\n')
         for line in scriptLst:

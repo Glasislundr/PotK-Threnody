@@ -9,6 +9,7 @@ from lib.PotkPaths import PotkPaths
 from lib.colors import colors
 from lib.story_viewer.StoryButton import StoryButton
 from lib.conf.conf import conf
+from lib.GUIGraphicElement import GUIGraphicElement
 
 class ScriptReaderEnv:
     script: ParsedScriptFile
@@ -23,6 +24,7 @@ class ScriptReaderEnv:
     activeTextBox: TextBox
     bgm: str
     buttons: list
+    guiElements: list
     label: str
     curTargetLabel: str
     nextTargetLabel: str
@@ -36,8 +38,6 @@ class ScriptReaderEnv:
         self.characterLayers = [[]]
         self.effects = {}
         self.effectLayers = [[]]
-        self.activeTextBox = TextBox()
-        self.textboxes = [TextBox(),self.activeTextBox]
         self.timeLockout = 0
         self.timedActions = []
         self.bgm = None
@@ -48,6 +48,19 @@ class ScriptReaderEnv:
         self.nextTargetLabel = None
         self.updated = True
         self.lastVoice = None
+        
+        PotkRes.preloadStandardStoryGuiElements()
+        PotkRes.preloadUnitData()
+        
+        #display.blit(PotkRes.guiDiagBorderTop, ((conf.display_width / 2) - (PotkRes.guiDiagBorderTop.get_width() / 2),0))
+        #display.blit(PotkRes.guiDiagBorderBot, ((conf.display_width / 2) - (PotkRes.guiDiagBorderBot.get_width() / 2),conf.display_height - PotkRes.guiDiagBorderBot.get_height()))
+        topBorder = GUIGraphicElement(PotkRes.guiDiagBorderTop, pos=(0,0))
+        botBorder = GUIGraphicElement(PotkRes.guiDiagBorderBot, pos=(0,conf.display_height - PotkRes.guiDiagBorderBot.get_height()))
+        self.activeTextBox = TextBox(pos=(0,conf.display_height * 0.742))
+        self.activeTextBox.setVisible(True)
+        inactiveTB = TextBox(pos=(0,conf.display_height * 0.07))
+        self.textboxes = [inactiveTB,self.activeTextBox]
+        self.guiElements = [topBorder, botBorder, inactiveTB, self.activeTextBox]
     def setLockoutTime(self, time):
         self.timeLockout = time
     def waitForInput(self):
@@ -91,13 +104,13 @@ class ScriptReaderEnv:
             
     def setBackgroundImage(self,img):
         self.background = img
-        self.backgroundX = 0
-        self.backgroundY = 0
+        self.backgroundX = (conf.display_width / 2) - (img.get_width() / 2)
+        self.backgroundY = (conf.display_height / 2) - (img.get_height() / 2)
         self.updated = True
     def setTextboxBackground(self, frameType, boxId):
         #TODO what is second arg??
-        self.activeTextBox.background = frameType
-        self.activeTextBox.style = 'normal'
+        self.activeTextBox.setBackground(frameType)
+        self.activeTextBox.setStyle('normal')
         self.activeTextBox.visible = True
         self.updated = True
     def setTextboxStyle(self, style):
@@ -108,7 +121,7 @@ class ScriptReaderEnv:
         if style == 'close':
             self.activeTextBox.visible = False
         else:
-            self.activeTextBox.style = style
+            self.activeTextBox.setStyle(style)
             self.activeTextBox.visible = True
         self.updated = True
     def setTextboxArrow(self, boxId, time):
@@ -117,17 +130,17 @@ class ScriptReaderEnv:
         if self.textboxes[txtboxId]:
             self.activeTextBox = self.textboxes[txtboxId]
         else:
-            self.textboxes[txtboxId] = TextBox()
+            #self.textboxes[txtboxId] = TextBox()
             self.activeTextBox = self.textboxes[txtboxId]
         self.updated = True
     def setSpeaker(self,name):
         if self.activeTextBox:
-            self.activeTextBox.speaker = name
-            self.activeTextBox.text = ''
+            self.activeTextBox.setSpeaker(name)
+            self.activeTextBox.setText('')
         self.updated = True
     def addDialog(self,line):
         if self.activeTextBox:
-            self.activeTextBox.text += line + '\n'
+            self.activeTextBox.addTextLine(line)
         self.updated = True
     def setTextSize(self,size):
         if self.activeTextBox:
@@ -146,7 +159,7 @@ class ScriptReaderEnv:
         self.characterLayers[c.layer] += [c]
         self.updated = True
     def setCharacterMask(self,cid,mask):
-        self.characters[cid].maskOn = (mask == 'on')
+        self.characters[cid].setMaskOn(mask == 'on')
         self.updated = True
     def setCharacterFace(self,cid,face):
         self.characters[cid].changeFace(face)
@@ -245,81 +258,83 @@ class ScriptReaderEnv:
                 tarPosY = 850 - arimg.get_height()
                 display.blit(arimg, (tarPosX,tarPosY))
 
-        # Draw GUI elements
-        display.blit(PotkRes.guiDiagBorderTop, (0,0))
-        display.blit(PotkRes.guiDiagBorderBot, (0,display.get_height() - PotkRes.guiDiagBorderBot.get_height()))
-
-        if self.textboxes[0].visible:
-            if self.textboxes[0].background:
-                tbackground = PotkRes.guiTextBoxBackgroundR
-                tname = PotkRes.guiTextBoxNameP
-                if self.textboxes[0].style == 'toge':
-                    tframe = PotkRes.guiTextBoxSpikeFrameO
-                elif self.textboxes[0].style == 'moya':
-                    tframe = PotkRes.guiTextBoxThoughtFrameP
-                else:
-                    tframe = PotkRes.guiTextBoxStandardFrameY
-            else:
-                tbackground = PotkRes.guiTextBoxBackgroundG
-                tname = PotkRes.guiTextBoxNameG
-                if self.textboxes[0].style == 'toge':
-                    tframe = PotkRes.guiTextBoxSpikeFrameY
-                elif self.textboxes[0].style == 'moya':
-                    tframe = PotkRes.guiTextBoxThoughtFrameG
-                else:
-                    tframe = PotkRes.guiTextBoxStandardFrameB
-            display.blit(tbackground, (17,40))
-            display.blit(tframe, (49,55))
-            if self.textboxes[0].speaker:
-                display.blit(tname, (31,30))
-                theName = PotkRes.name_font.render(self.textboxes[0].speaker, True, colors.white)
-                display.blit(theName, (95,25))
-            textList = self.textboxes[0].text.split('\n')
-            offset = 0
-            for line in textList:
-                theText = self.textboxes[0].myfont.render(line, True, colors.black)
-                display.blit(theText, (95,67 + offset))
-                offset += self.textboxes[0].textspacing
-            if self.activeTextBox == self.textboxes[0]:
-                display.blit(PotkRes.guiTextBoxNextArrow, (611,143))
-        if self.textboxes[1].visible:
-            if self.textboxes[1].background:
-                tbackground = PotkRes.guiTextBoxBackgroundR
-                tname = PotkRes.guiTextBoxNameP
-                if self.textboxes[1].style == 'toge':
-                    tframe = PotkRes.guiTextBoxSpikeFrameO
-                elif self.textboxes[1].style == 'moya':
-                    tframe = PotkRes.guiTextBoxThoughtFrameP
-                else:
-                    tframe = PotkRes.guiTextBoxStandardFrameY
-            else:
-                tbackground = PotkRes.guiTextBoxBackgroundG
-                tname = PotkRes.guiTextBoxNameG
-                if self.textboxes[1].style == 'toge':
-                    tframe = PotkRes.guiTextBoxSpikeFrameY
-                elif self.textboxes[1].style == 'moya':
-                    tframe = PotkRes.guiTextBoxThoughtFrameG
-                else:
-                    tframe = PotkRes.guiTextBoxStandardFrameB
-                
-            display.blit(tbackground, (17,843))
-            display.blit(tframe, (49,858))
-            if self.textboxes[1].speaker:
-                display.blit(tname, (31,833))
-                theName = PotkRes.name_font.render(self.textboxes[1].speaker, True, colors.white)
-                display.blit(theName, (95,828))
-            textList = self.textboxes[1].text.split('\n')
-            offset = 0
-            for line in textList:
-                theText = self.textboxes[1].myfont.render(line, True, colors.black)
-                display.blit(theText, (95,870 + offset))
-                offset += self.textboxes[1].textspacing
-            if self.activeTextBox == self.textboxes[1]:
-                display.blit(PotkRes.guiTextBoxNextArrow, (611,946))
-        
         # Draw Special Effects
         for name, effect in self.effects.items():
             effect.draw(display)
+        
+        # Draw GUI elements
+        for elem in self.guiElements:
+            elem.draw(display)
+        #display.blit(PotkRes.guiDiagBorderTop, ((conf.display_width / 2) - (PotkRes.guiDiagBorderTop.get_width() / 2),0))
+        #display.blit(PotkRes.guiDiagBorderBot, ((conf.display_width / 2) - (PotkRes.guiDiagBorderBot.get_width() / 2),conf.display_height - PotkRes.guiDiagBorderBot.get_height()))
+
+        # if self.textboxes[0].visible:
+            # if self.textboxes[0].background:
+                # tbackground = PotkRes.guiTextBoxBackgroundR
+                # tname = PotkRes.guiTextBoxNameP
+                # if self.textboxes[0].style == 'toge':
+                    # tframe = PotkRes.guiTextBoxSpikeFrameO
+                # elif self.textboxes[0].style == 'moya':
+                    # tframe = PotkRes.guiTextBoxThoughtFrameP
+                # else:
+                    # tframe = PotkRes.guiTextBoxStandardFrameY
+            # else:
+                # tbackground = PotkRes.guiTextBoxBackgroundG
+                # tname = PotkRes.guiTextBoxNameG
+                # if self.textboxes[0].style == 'toge':
+                    # tframe = PotkRes.guiTextBoxSpikeFrameY
+                # elif self.textboxes[0].style == 'moya':
+                    # tframe = PotkRes.guiTextBoxThoughtFrameG
+                # else:
+                    # tframe = PotkRes.guiTextBoxStandardFrameB
+            # display.blit(tbackground, (17,40))
+            # display.blit(tframe, (49,55))
+            # if self.textboxes[0].speaker:
+                # display.blit(tname, (31,30))
+                # theName = PotkRes.name_font.render(self.textboxes[0].speaker, True, colors.white)
+                # display.blit(theName, (95,25))
+            # textList = self.textboxes[0].text.split('\n')
+            # offset = 0
+            # for line in textList:
+                # theText = self.textboxes[0].myfont.render(line, True, colors.black)
+                # display.blit(theText, (95,67 + offset))
+                # offset += self.textboxes[0].textspacing
+            # if self.activeTextBox == self.textboxes[0]:
+                # display.blit(PotkRes.guiTextBoxNextArrow, (611,143))
+        # if self.textboxes[1].visible:
+            # if self.textboxes[1].background:
+                # tbackground = PotkRes.guiTextBoxBackgroundR
+                # tname = PotkRes.guiTextBoxNameP
+                # if self.textboxes[1].style == 'toge':
+                    # tframe = PotkRes.guiTextBoxSpikeFrameO
+                # elif self.textboxes[1].style == 'moya':
+                    # tframe = PotkRes.guiTextBoxThoughtFrameP
+                # else:
+                    # tframe = PotkRes.guiTextBoxStandardFrameY
+            # else:
+                # tbackground = PotkRes.guiTextBoxBackgroundG
+                # tname = PotkRes.guiTextBoxNameG
+                # if self.textboxes[1].style == 'toge':
+                    # tframe = PotkRes.guiTextBoxSpikeFrameY
+                # elif self.textboxes[1].style == 'moya':
+                    # tframe = PotkRes.guiTextBoxThoughtFrameG
+                # else:
+                    # tframe = PotkRes.guiTextBoxStandardFrameB
+                
+            # display.blit(tbackground, (17,843))
+            # display.blit(tframe, (49,858))
+            # if self.textboxes[1].speaker:
+                # display.blit(tname, (31,833))
+                # theName = PotkRes.name_font.render(self.textboxes[1].speaker, True, colors.white)
+                # display.blit(theName, (95,828))
+            # textList = self.textboxes[1].text.split('\n')
+            # offset = 0
+            # for line in textList:
+                # theText = self.textboxes[1].myfont.render(line, True, colors.black)
+                # display.blit(theText, (95,870 + offset))
+                # offset += self.textboxes[1].textspacing
+            # if self.activeTextBox == self.textboxes[1]:
+                # display.blit(PotkRes.guiTextBoxNextArrow, (611,946))
         
         for button in self.buttons:
             button.draw(display)
@@ -333,6 +348,8 @@ class ScriptReaderEnv:
             self.timeLockout -= 1
             if self.timeLockout <= 0:
                 self.waiting = False
+        elif self.timedActions:
+            pass
         else:
             while not self.waiting:
                 self.script.runNextAction(self)
