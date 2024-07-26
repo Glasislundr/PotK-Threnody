@@ -1,5 +1,6 @@
 import os
 import math
+import io
 from lib.audio.utils import *
 
 """
@@ -994,7 +995,7 @@ def decodeHca(buffer, key, awbKey, volume):
     hca['pcmData'] = pcmData
     return hca
 
-def writeWavFile(wavPath, mode, channelCount, samplingRate, pcmData):
+def writeWavFile(wavFile, mode, channelCount, samplingRate, pcmData):
     wavRiff = bytearray(36)
     wavRiff[0:4] = b'RIFF'#.write('RIFF', 0)
     wavRiff[8:16] = b'WAVEfmt '#.write('WAVEfmt ', 8)
@@ -1018,9 +1019,9 @@ def writeWavFile(wavPath, mode, channelCount, samplingRate, pcmData):
     wav['riffSize'] = 0x1C + len(wavData) + wav['dataSize']
     wavData[4:8] = (wav['dataSize']).to_bytes(4,'little')#.writeUInt32LE(wav['dataSize'], 0x4)
     wavRiff[4:8] = (wav['riffSize']).to_bytes(4,'little')#.writeUInt32LE(wav['riffSize'], 0x4)
-    with open(wavPath, 'wb') as f:
-        f.write(wavRiff)
-        f.write(wavData)
+
+    wavFile.write(wavRiff)
+    wavFile.write(wavData)
     buffer = bytearray(0xFFFFF)
     n = 0
     once = 0
@@ -1049,12 +1050,10 @@ def writeWavFile(wavPath, mode, channelCount, samplingRate, pcmData):
         if (once == 0):
             once = n
         if (n + once > len(buffer)):
-            with open(wavPath, 'ab') as f:
-                f.write(buffer[0:n])
+            wavFile.write(buffer[0:n])
             n = 0
     if (n > 0):
-        with open(wavPath, 'ab') as f:
-            f.write(buffer[0:n])
+        wavFile.write(buffer[0:n])
 
 def decodeHcaToWav(buffer, key, awbKey, wavPath, volume, mode):
     if (mode is None):
@@ -1069,4 +1068,19 @@ def decodeHcaToWav(buffer, key, awbKey, wavPath, volume, mode):
     wavdirname, wavbasename = os.path.split(wavPath)
     hca = decodeHca(buffer, key, awbKey, volume)
     print(f'Writing {wavbasename}...')
-    writeWavFile(wavPath, mode, hca['channelCount'], hca['samplingRate'], hca['pcmData'])
+    with open(wavPath, 'wb') as f:
+        writeWavFile(f, mode, hca['channelCount'], hca['samplingRate'], hca['pcmData'])
+
+def decodeHcaToWavBuffer(buffer, key, awbKey, volume, mode):
+    if (mode is None):
+        mode = 16
+    if (type(buffer) is str):
+        dirname, basename = os.path.split(buffer)
+        filename, ext = os.path.splitext(basename)
+        #print(f'Reading {basename}...')
+    outBuf = io.BytesIO()
+    hca = decodeHca(buffer, key, awbKey, volume)
+    #print(f'Writing {wavbasename}...')
+    writeWavFile(outBuf, mode, hca['channelCount'], hca['samplingRate'], hca['pcmData'])
+    outBuf.seek(0)
+    return outBuf

@@ -166,10 +166,10 @@ class ScriptFileActions:
             self.time = time
         def run(self, env):
             if self.time > 0:
-                #print('Set Alpha Duration: ' + str(self.cid) + ' to ' + str(self.alpha) + ' over ' + str(self.time))
                 char = env.getCharacter(self.cid)
-                tarPos = char.storyPosToUnitPos(self.pos)
                 env.startMovingCharacterToStoryPos(self.cid, self.pos)
+                tarPos = char.storyPosToUnitPos(self.pos)
+                print(f'Moving unit over time: from {char.pos} to {tarPos} (based on {self.pos})')
                 env.registerTimedAction(ScriptFileActions.MoveCharacterPeriodic(env, self.cid, tarPos[0], tarPos[1], self.time))
             else:
                 #print('Set Alpha Instant: ' + str(self.cid) + ' to ' + str(self.alpha))
@@ -179,9 +179,9 @@ class ScriptFileActions:
             char = env.getCharacter(cid)
             self.cid = cid
             self.xTarget = x
-            self.yTarget = y
+            self.yTarget = char.pos[1]
             self.xStep = (x - char.pos[0]) / (time * conf.fps)
-            self.yStep = (y - char.pos[1]) / (time * conf.fps)
+            self.yStep = 0#(y - char.pos[1]) / (time * conf.fps)
             print(f'Creating movement from x:{char.pos[0]} to x:{x} and y:{char.pos[1]} to y:{y}')
             self.timesRemaining = int(time * conf.fps + 2)
             print(f'Move Character Periodic action: {self.cid} to {self.xTarget},{self.yTarget}  by changing {self.xStep},{self.yStep} {self.timesRemaining} times')

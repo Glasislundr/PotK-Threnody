@@ -1,6 +1,7 @@
 import os
 
 import lib.audio.hca_v2 as hca
+from lib.audio.utils import *
 
 """
 This is adapted from the afs2.js file from CriTools
@@ -11,7 +12,7 @@ def parseAFS2(buffer):
     if type(buffer) is str:
         with open(buffer, 'rb') as f:
             buffer = f.read()
-    if (!buffer or len(buffer) < 4):
+    if (not buffer or len(buffer) < 4):
         return None
     pos = 0
     config = {}
@@ -52,7 +53,7 @@ def parseAFS2(buffer):
     else:
         print('Unknown Size')
     mod = start % config['align']
-    if (mod != 0)
+    if (mod != 0):
         start += config['align'] - mod
     for i in range(config['fileCount']):
         end = 0
@@ -67,7 +68,7 @@ def parseAFS2(buffer):
         files += [buffer[start:end]]
         start = end
         mod = start % config['align']
-        if (mod != 0)
+        if (mod != 0):
             start += config['align'] - mod
     
     return files, config
@@ -77,9 +78,9 @@ def awb2hcas(awbPath, key, hcaDir, fType, skip):
     pathInfo = path.parse(awbPath)
     print(f'Parsing {pathInfo.base}...')
     afsList, config = parseAFS2(awbPath)
-    if (hcaDir is None)
+    if (hcaDir is None):
         hcaDir = path.join(pathInfo.dir, pathInfo.name)
-    if (!os.path.exists(hcaDir)):
+    if (not os.path.exists(hcaDir)):
         os.mkdirs(hcaDir)
     elif (skip):
         print(f'Skipped {pathInfo.base}...')

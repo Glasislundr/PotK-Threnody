@@ -19,6 +19,16 @@ def getStreamingAsset(epath, ipath):
     
 
 def getSpecialEffect(seName):
+    if seName == 'bg_red':
+        seName = 'bg_white'
+        epath = PotkPaths.getExtractedSpecialEffectArtPath(seName)
+        ipath = PotkPaths.getInternalSpecialEffectArtPath(seName)
+        if os.path.exists(epath):
+            return PotkRes.getGameImage(epath)
+        bge = getStreamingAsset(epath, ipath).copy()
+        bge.fill((255,0,0))
+        return bge
+        
     epath = PotkPaths.getExtractedSpecialEffectArtPath(seName)
     ipath = PotkPaths.getInternalSpecialEffectArtPath(seName)
     return getStreamingAsset(epath, ipath)
