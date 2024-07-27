@@ -21,7 +21,7 @@ crashed = False
 #scriptName = '10013201' # old Masamune chara story
 #scriptName = '10015301' # old wedding Masamune chara story
 #scriptName = '10026303' # old Laev chara story
-#scriptName = '6070108' # original Ancient Killer story
+scriptName = '6070108' # original Ancient Killer story
 #scriptName = '100104011' # early LR budoukai
 #scriptName = '82019101' #learn with manga
 #scriptName = '241051210' #Gakuen April 1 Start
@@ -43,7 +43,7 @@ crashed = False
 
 #scriptName = '2762001' # Konosuba
 #scriptName = '2761001' # Konosuba Pre-battle
-scriptName = '2761002' # Konosuba Post-battle
+#scriptName = '2761002' # Konosuba Post-battle
 
 try:
     theScript = ParsedScriptFile(scriptName)
