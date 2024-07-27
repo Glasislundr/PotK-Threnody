@@ -29,6 +29,7 @@ def getTexture2D(epath, ipath):
                 if img is not None:
                     loaded_texture_2ds[ipath] = img
                     return pygame.image.fromstring(img.tobytes(), img.size, img.mode)
+    print(f'Failed to load Texture2D for {ipath} from {cpath}')
     return None
 
 def getFromGameObject(epath, ipath):
@@ -62,6 +63,12 @@ def getGUIMask(mask):
     
     epath = os.path.join(PotkPaths.resRootPath, PotkPaths.maskPath, mask + '.png')
     loadedMask = getTexture2D(epath, ipath)
+    if loadedMask is None:
+        if mask == 'mask_Chara_C':
+            loadedMask = pygame.Surface((352,960), pygame.SRCALPHA)
+        else:
+            loadedMask = pygame.Surface((450,960), pygame.SRCALPHA)
+        loadedMask.fill((255,255,255,255))
     recolor = pygame.Surface(loadedMask.get_size(), pygame.SRCALPHA)
     recolor.fill((255,255,255,0))
     loadedMask.blit(recolor, (0,0), special_flags = pygame.BLEND_RGBA_MAX)
