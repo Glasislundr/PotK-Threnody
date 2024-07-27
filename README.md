@@ -23,7 +23,7 @@ Do note that in total the downloaded and extracted data will take roughly 72 GB 
   - Note that the cache data takes roughly 10GB of disk space.
   - This may stop working soon, when the servers are shut off.
   - ~~This can be skipped if the cache folder can be provided from another source, such as DMM.~~
-    - It was previous thought that the DMM cache folder could be used as-is, but differences in the paths.json makes this difficult. The DMM cache can be used with the dmm-downloader branch, but that branch is out-of-date and only intended for datamining purposes
+    - It was previously thought that the DMM cache folder could be used as-is, but differences in the paths.json makes this difficult. The DMM cache can be used with the dmm-downloader branch, but that branch is out-of-date and only intended for datamining purposes. The story player on that branch is in a rudimentary state.
 - 02_convert_masterdata.py - Extracts the MasterData json files.
 - 03_extract_all_assets.py - Extracts all the game files from the raw Unity data files.
   - The extracted data will take roughly 30GB of disk space.
