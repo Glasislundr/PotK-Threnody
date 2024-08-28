@@ -11,7 +11,7 @@ class PotkPaths:
     masterdataPath = os.path.join(PATH, r'masterdata')
     scriptPath = os.path.join(masterdataPath, 'ScriptScript')
     streamingAssetPath = os.path.join(resRootPath, r'StreamingAssets')
-    soundRootPath = os.path.join(resRootPath, r'android\wav')
+    soundRootPath = os.path.join(streamingAssetPath, r'android\wav')
     bkgPath = r'Prefabs\BackGround'
     assetBundlePath = r'AssetBundle\Resources'
     maskPath = r'GUI\009-3_sozai'
