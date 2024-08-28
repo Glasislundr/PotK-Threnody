@@ -79,6 +79,12 @@ class ScriptFileActions:
             self.cid = cid
         def run(self, env):
             env.addCharacter(self.cid)
+    class AddCharacterCopy:
+        def __init__(self, eid, cid):
+            self.eid = eid
+            self.cid = cid
+        def run(self, env):
+            env.addCharacterCopy(self.eid, self.cid)
     class SetCharacterMask:
         def __init__(self, cid, mask):
             self.cid = cid
