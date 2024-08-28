@@ -1,5 +1,5 @@
 import os
-import UnityPy
+import lib.downloader.UnityPy as UnityPy
 from lib.downloader.paths import Paths, PATH
 from lib.downloader.api import Enviroment
 from lib.downloader import AssetBatchConverter

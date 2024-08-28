@@ -54,6 +54,8 @@ def main():
 
     os.makedirs(SRC, exist_ok=True)
     os.makedirs(DST, exist_ok=True)
+    pool = Pool(processes=cpu_count())
+    
     # AssetBundle
     TODO = []
     for fpath, item in paths["AssetBundle"].items():
@@ -66,7 +68,6 @@ def main():
         else:
             TODO.append((fpath, item))
 
-    pool = Pool(processes=cpu_count())
     for i, (fpath, ext) in enumerate(
         pool.imap_unordered(
             update_assetbundle, ((env, fpath, item) for fpath, item in TODO)

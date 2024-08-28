@@ -1,4 +1,4 @@
-from UnityPy.classes import Mesh
+from lib.downloader.UnityPy.classes import Mesh
 
 
 def export_mesh(m_Mesh: Mesh, format="obj") -> str:
