@@ -1,8 +1,8 @@
 from io import BytesIO
 import os
 import json
-import UnityPy
-from UnityPy.classes import (
+import lib.downloader.UnityPy as UnityPy
+from lib.downloader.UnityPy.classes import (
     Object,
     PPtr,
     MonoBehaviour,
@@ -15,7 +15,7 @@ from UnityPy.classes import (
     AudioClip,
     GameObject,
 )
-from UnityPy.enums.ClassIDType import ClassIDType
+from lib.downloader.UnityPy.enums.ClassIDType import ClassIDType
 from typing import Union, List, Dict, Callable
 from pathlib import Path
 

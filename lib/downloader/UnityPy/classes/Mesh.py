@@ -13,7 +13,7 @@ from enum import IntEnum
 from ..export import MeshExporter
 
 try:
-    from UnityPy import UnityPyBoost
+    from lib.downloader.UnityPy import UnityPyBoost
 except:
     UnityPyBoost = None
 

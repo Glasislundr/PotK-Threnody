@@ -22,7 +22,9 @@ Do note that in total the downloaded and extracted data will take roughly 72 GB 
 - 01_raw_download.py - Downloads all of the raw game files into the cache folder.
   - Note that the cache data takes roughly 10GB of disk space.
   - This may stop working soon, when the servers are shut off.
-  - This can be skipped if the cache folder can be provided from another source, such as DMM.
+  - ~~This can be skipped if the cache folder can be provided from another source, such as DMM.~~
+    - It was previously thought that the DMM cache folder could be used as-is, but differences in the paths.json makes this difficult. The DMM cache can be used with the dmm-downloader branch, but that branch is out-of-date and only intended for datamining purposes. The story player on that branch is in a rudimentary state.
+	- A copy of an Android phone cache folder can be used, but the 01 script should still be run to ensure no files are missing. The script will only download missing files, so this should be a 100 or so files at most (if the game's 'downloaded all game files' option had been run).
 - 02_convert_masterdata.py - Extracts the MasterData json files.
 - 03_extract_all_assets.py - Extracts all the game files from the raw Unity data files.
   - The extracted data will take roughly 30GB of disk space.
@@ -33,6 +35,7 @@ Do note that in total the downloaded and extracted data will take roughly 72 GB 
   - You can skip this step and still proceed to step 5.
 - 05_read_story.py - A story emulator for the PotK story files.
   - Currently only loads files by ID, set by a variable in the script itself.
+  - This will load without the converted sound files, it will simply be silent.
 
 ## License
 MIT

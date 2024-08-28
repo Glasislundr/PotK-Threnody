@@ -57,7 +57,7 @@ class ParsedScriptFile:
                     
                 case 'body':
                     # Add a new character to the scene (id)
-                    self.actions.extend([ScriptFileActions.AddCharacter(int(lispAction[1]))])      
+                    self.actions.extend([ScriptFileActions.AddCharacter(int(lispAction[1]))])
                 case 'entry':
                     # Add a duplicated character to the scene (clone id, id)
                     self.actions.extend([ScriptFileActions.AddCharacterCopy(int(lispAction[1]), int(lispAction[2]))])

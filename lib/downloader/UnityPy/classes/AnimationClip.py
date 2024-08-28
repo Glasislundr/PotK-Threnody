@@ -8,7 +8,7 @@ from ..math import Quaternion, Vector3
 from ..streams import EndianBinaryReader
 
 try:
-    from UnityPy import UnityPyBoost
+    from lib.downloader.UnityPy import UnityPyBoost
 except ImportError:
     UnityPyBoost = None
 
