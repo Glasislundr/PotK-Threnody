@@ -150,6 +150,10 @@ class ScriptReaderEnv:
         self.characters[cid] = Character(cid)
         self.characterLayers[0] += [self.characters[cid]]
         self.updated = True
+    def addCharacterCopy(self,eid,cid):
+        self.characters[eid] = Character(cid)
+        self.characterLayers[0] += [self.characters[eid]]
+        self.updated = True
     def setCharacterLayer(self,cid,layer):
         c = self.characters[cid]
         self.characterLayers[c.layer].remove(c)

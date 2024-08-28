@@ -35,7 +35,6 @@ Do note that in total the downloaded and extracted data will take roughly 72 GB 
   - You can skip this step and still proceed to step 5.
 - 05_read_story.py - A story emulator for the PotK story files.
   - Currently only loads files by ID, set by a variable in the script itself.
-  - This will load without the converted sound files, it will simply be silent.
 
 ## License
 MIT
