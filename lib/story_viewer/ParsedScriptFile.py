@@ -29,6 +29,8 @@ class ParsedScriptFile:
         elif line[:1] == '#':
             #lisp action - handle
             lispAction = line[1:].strip().split(' ')
+            # remove empty strings
+            lispAction = [x for x in lispAction if x]
             match lispAction[0]:
                 case 'background':
                     self.actions.extend([ScriptFileActions.SetBackground(lispAction[1])])
