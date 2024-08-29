@@ -45,7 +45,7 @@ scriptName = '6070108' # original Ancient Killer story
 #scriptName = '2761001' # Konosuba Pre-battle
 #scriptName = '2761002' # Konosuba Post-battle
 
-scriptName = '930201' # to test the lisp action: clone
+scriptName = '1010101' # to test the memory leak bugfix
 
 try:
     theScript = ParsedScriptFile(scriptName)
