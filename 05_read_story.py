@@ -45,7 +45,7 @@ scriptName = '6070108' # original Ancient Killer story
 #scriptName = '2761001' # Konosuba Pre-battle
 #scriptName = '2761002' # Konosuba Post-battle
 
-scriptName = '840203' # to test the bugfix of empty strings in lisp actions
+scriptName = '930201' # to test the lisp action: clone
 
 try:
     theScript = ParsedScriptFile(scriptName)

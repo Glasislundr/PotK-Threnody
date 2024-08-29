@@ -63,6 +63,9 @@ class ParsedScriptFile:
                 case 'entry':
                     # Add a duplicated character to the scene (clone id, id)
                     self.actions.extend([ScriptFileActions.AddCharacterCopy(int(lispAction[1]), int(lispAction[2]))])
+                case 'clone':
+                    # Add a duplicated character to the scene (clone id, id)
+                    self.actions.extend([ScriptFileActions.AddCharacterCopy(int(lispAction[1]), int(lispAction[2]))])
                 case 'mask':
                     # Set the transparency mask on or off (id, on/off)
                     self.actions.extend([ScriptFileActions.SetCharacterMask(int(lispAction[1]), lispAction[2])])
