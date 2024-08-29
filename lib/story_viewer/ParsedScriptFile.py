@@ -48,10 +48,10 @@ class ParsedScriptFile:
                     # clear the textbox and set text scroll time
                     self.actions.extend([ScriptFileActions.SetTextboxBackground(int(lispAction[1]), int(lispAction[2]))])
                 case 'textwindow':
-                    # clear the textbox and set text scroll time
+                    # set the textbox style
                     self.actions.extend([ScriptFileActions.SetTextboxStyle(lispAction[1].replace('"',''))])
                 case 'textsize':
-                    # clear the textbox and set text scroll time
+                    # set the text size
                     self.actions.extend([ScriptFileActions.SetTextSize(int(lispAction[1]))])
                     
                     
@@ -80,7 +80,7 @@ class ParsedScriptFile:
                     # ??????? Old filler action or something??
                     pass#self.actions.extend([ScriptFileActions.SetCharacterSpeaking(int(lispAction[1]))])
                 case 'move':
-                    # Set the character transparency (id, alpha%, duration)
+                    # Move the character position (id, position, duration)
                     self.actions.extend([ScriptFileActions.MoveCharacter(int(lispAction[1]), int(lispAction[2]), float(lispAction[3]))])
                     
                     
@@ -88,7 +88,7 @@ class ParsedScriptFile:
                     # Fade the screen out to a color (image name, duration)
                     self.actions.extend([ScriptFileActions.FadeOut(lispAction[1].replace('"',''), float(lispAction[2]))])
                 case 'fadein':
-                    # Fade the screen out to a color (image name, duration)
+                    # Fade the screen in from a color (image name, duration)
                     self.actions.extend([ScriptFileActions.FadeIn(lispAction[1].replace('"',''), float(lispAction[2]))])  
                 case 'imageset':
                     # Add a special effect art asset (se id, image art name)
