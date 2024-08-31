@@ -29,6 +29,8 @@ class ParsedScriptFile:
         elif line[:1] == '#':
             #lisp action - handle
             lispAction = line[1:].strip().split(' ')
+            # remove empty strings
+            lispAction = [x for x in lispAction if x]
             match lispAction[0]:
                 case 'background':
                     self.actions.extend([ScriptFileActions.SetBackground(lispAction[1])])
@@ -48,10 +50,10 @@ class ParsedScriptFile:
                     # clear the textbox and set text scroll time
                     self.actions.extend([ScriptFileActions.SetTextboxBackground(int(lispAction[1]), int(lispAction[2]))])
                 case 'textwindow':
-                    # clear the textbox and set text scroll time
+                    # set the textbox style
                     self.actions.extend([ScriptFileActions.SetTextboxStyle(lispAction[1].replace('"',''))])
                 case 'textsize':
-                    # clear the textbox and set text scroll time
+                    # set the text size
                     self.actions.extend([ScriptFileActions.SetTextSize(int(lispAction[1]))])
                     
                     
@@ -59,6 +61,9 @@ class ParsedScriptFile:
                     # Add a new character to the scene (id)
                     self.actions.extend([ScriptFileActions.AddCharacter(int(lispAction[1]))])
                 case 'entry':
+                    # Add a duplicated character to the scene (clone id, id)
+                    self.actions.extend([ScriptFileActions.AddCharacterCopy(int(lispAction[1]), int(lispAction[2]))])
+                case 'clone':
                     # Add a duplicated character to the scene (clone id, id)
                     self.actions.extend([ScriptFileActions.AddCharacterCopy(int(lispAction[1]), int(lispAction[2]))])
                 case 'mask':
@@ -80,7 +85,7 @@ class ParsedScriptFile:
                     # ??????? Old filler action or something??
                     pass#self.actions.extend([ScriptFileActions.SetCharacterSpeaking(int(lispAction[1]))])
                 case 'move':
-                    # Set the character transparency (id, alpha%, duration)
+                    # Move the character position (id, position, duration)
                     self.actions.extend([ScriptFileActions.MoveCharacter(int(lispAction[1]), int(lispAction[2]), float(lispAction[3]))])
                     
                     
@@ -88,7 +93,7 @@ class ParsedScriptFile:
                     # Fade the screen out to a color (image name, duration)
                     self.actions.extend([ScriptFileActions.FadeOut(lispAction[1].replace('"',''), float(lispAction[2]))])
                 case 'fadein':
-                    # Fade the screen out to a color (image name, duration)
+                    # Fade the screen in from a color (image name, duration)
                     self.actions.extend([ScriptFileActions.FadeIn(lispAction[1].replace('"',''), float(lispAction[2]))])  
                 case 'imageset':
                     # Add a special effect art asset (se id, image art name)
@@ -145,11 +150,11 @@ class ParsedScriptFile:
                     print('Unknown lisp action found: ' + lispAction[0])
         elif line[:1] == '@':
             #Change speaker
-            self.actions.extend([ScriptFileActions.SetSpeaker(line[1:])])
+            self.actions.extend([ScriptFileActions.SetSpeaker(line[1:].replace('%(userName)s','[ユーザー名]'))])
             pass
         else:
             #dialog line
-            self.actions.extend([ScriptFileActions.AddDialog(line)])
+            self.actions.extend([ScriptFileActions.AddDialog(line.replace('%(userName)s','[ユーザー名]'))])
             pass
 
     def runNextAction(self, env):

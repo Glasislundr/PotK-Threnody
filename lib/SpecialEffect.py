@@ -39,8 +39,9 @@ class SpecialEffect:
         self.rebuildCurImage()
     def setScale(self, scale):
         self.scale = scale
-        modscale = scale / self.image.get_height() * self.curImg.get_height()
-        self.curImg = pygame.transform.smoothscale_by(self.curImg, modscale)
+        # modscale = scale / self.image.get_height() * self.curImg.get_height()
+        # self.curImg = pygame.transform.smoothscale_by(self.curImg, modscale)
+        self.curImg = pygame.transform.smoothscale_by(self.image, scale)
         self.screenPos = createScreenPos(self.pos, (self.curImg.get_width(), self.curImg.get_height()))
     def rebuildCurImage(self):
         self.curImg = self.image.copy()

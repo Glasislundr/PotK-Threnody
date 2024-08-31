@@ -45,7 +45,7 @@ scriptName = '6070108' # original Ancient Killer story
 #scriptName = '2761001' # Konosuba Pre-battle
 #scriptName = '2761002' # Konosuba Post-battle
 
-scriptName = '1100501' # to test script action: entry
+scriptName = '210203020' # to test username
 
 try:
     theScript = ParsedScriptFile(scriptName)
