@@ -150,11 +150,11 @@ class ParsedScriptFile:
                     print('Unknown lisp action found: ' + lispAction[0])
         elif line[:1] == '@':
             #Change speaker
-            self.actions.extend([ScriptFileActions.SetSpeaker(line[1:])])
+            self.actions.extend([ScriptFileActions.SetSpeaker(line[1:].replace('%(userName)s','[ユーザー名]'))])
             pass
         else:
             #dialog line
-            self.actions.extend([ScriptFileActions.AddDialog(line)])
+            self.actions.extend([ScriptFileActions.AddDialog(line.replace('%(userName)s','[ユーザー名]'))])
             pass
 
     def runNextAction(self, env):
